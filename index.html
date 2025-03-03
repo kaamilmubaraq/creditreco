@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CyberGraduation 2077</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --neon-cyan: #0ff;
+                --neon-pink: #f0f;
+                --matrix-green: #0f0;
+                --cyber-purple: #9060ff;
+                --dark-bg: #0a0a12;
+            }
+    
+            body {
+                background-color: var(--dark-bg);
+                color: var(--neon-cyan);
+                font-family: 'Rajdhani', sans-serif;
+                min-height: 100vh;
+                position: relative;
+                overflow-x: hidden;
+            }
+    
+            h1, h2, h3 {
+                font-family: 'Orbitron', sans-serif;
+                text-shadow: 0 0 10px var(--neon-cyan);
+            }
+    
+            .container {
+                position: relative;
+                z-index: 1;
+                background: rgba(10, 10, 18, 0.9);
+                padding: 2rem;
+                border: 1px solid var(--neon-cyan);
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            }
+    
+            .card {
+                background: rgba(0, 0, 0, 0.8);
+                border: 1px solid var(--neon-cyan);
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+                color: var(--neon-cyan);
+                margin-bottom: 1.5rem;
+            }
+    
+            .card-title {
+                color: var(--neon-pink);
+                border-bottom: 2px solid var(--neon-pink);
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+            }
+    
+            .form-control {
+                background: rgba(0, 0, 0, 0.5);
+                border: 1px solid var(--neon-cyan);
+                color: var(--neon-cyan);
+                font-family: 'Orbitron', sans-serif;
+            }
+    
+            .form-control:focus {
+                background: rgba(0, 0, 0, 0.7);
+                border-color: var(--neon-pink);
+                box-shadow: 0 0 15px var(--neon-pink);
+                color: var(--neon-pink);
+            }
+    
+            .selected-subjects {
+                background: rgba(0, 0, 0, 0.6);
+                border: 1px solid var(--neon-cyan);
+                box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+            }
+    
+            .selected-item {
+                background: linear-gradient(90deg, rgba(0, 255, 255, 0.1), rgba(144, 96, 255, 0.1));
+                border-left: 3px solid var(--neon-pink);
+                margin: 0.5rem 0;
+                padding: 0.8rem;
+                position: relative;
+            }
+    
+            .btn-danger {
+                background: #ff0066;
+                border: 1px solid #ff0066;
+                font-family: 'Orbitron', sans-serif;
+                text-shadow: 0 0 5px rgba(255, 0, 102, 0.5);
+            }
+    
+            .btn-danger:hover {
+                background: #ff0033;
+                border-color: #ff0033;
+                box-shadow: 0 0 15px #ff0066;
+            }
+    
+            .alert-success {
+                background: rgba(0, 255, 0, 0.1);
+                border: 1px solid var(--matrix-green);
+                color: var(--matrix-green);
+            }
+    
+            .alert-danger {
+                background: rgba(255, 0, 102, 0.1);
+                border: 1px solid #ff0066;
+                color: #ff0066;
+            }
+    
+            .credit-counter {
+                font-size: 1.2rem;
+                color: var(--neon-pink);
+                text-shadow: 0 0 5px rgba(255, 0, 255, 0.3);
+            }
+    
+            /* Cyberpunk Scanline Effect */
+            body::after {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 255, 255, 0.05) 0px,
+                    rgba(0, 255, 255, 0.05) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+                pointer-events: none;
+                z-index: 2;
+            }
+    
+            /* Grid Background */
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+                background-size: 20px 20px;
+                z-index: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container mt-4 mb-4">
+        <h1 class="mb-4">Graduation Requirement Checker</h1>
+        <p class="text-muted mb-4">I created this for fun! DONT TAKE THE RESULTS FROM THIS TOOL SERIOUSLY!! IF YOU DO YOU ARE GONNA FAIL!! THIS IS JUST FOR REFRENCE!!!
+            This tool is for checking if you meet the graduation requirements for a graduating Ibaraki Kosen (4th and 5th year).
+            Created by [Kaamil]. If there is any corrections pls msg me on instagram [@kami1.sama] . Tnx.
+        </p>
+        
+        <!-- Major Selection -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="major">Major</label>
+                    <select class="form-control" id="major">
+                        <option value="">Select a major...</option>
+                        <option value="Computer Science">情報系</option>
+                        <option value="Electrical Engineering">電気電子系</option>
+                        <option value="Business Administration">化学生物環境系</option>
+                        <option value="Mechanical Engineering">機械制御系</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="submajor">Sub-major</label>
+                    <select class="form-control" id="submajor" disabled>
+                        <option value="">Select a sub-major...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Subjects -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">一般科目 (Minimum 11 credits)</h3>
+                <select class="form-control mb-3" id="general-subject">
+                    <option value="" disabled selected>Select a general subject...</option>
+                </select>
+                <div id="general-selected" class="selected-subjects"></div>
+                <div class="credit-counter">Credits: <span id="general-credits">0</span>/11</div>
+            </div>
+        </div>
+
+        <!-- Specialized Subjects -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">専門科目 (Minimum 50 credits including Sub-major)</h3>
+                <select class="form-control mb-3" id="specialized-subject" disabled>
+                    <option value="" disabled selected>Select a major...</option>
+                </select>
+                <div id="specialized-selected" class="selected-subjects"></div>
+                <div class="credit-counter">Credits: <span id="specialized-credits">0</span>/50</div>
+            </div>
+        </div>
+
+        <!-- Sub-major Subjects -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">副専攻 (Minimum 4 credits)</h3>
+                <select class="form-control mb-3" id="subMajor-subject" disabled>
+                    <option value="" disabled selected>Select a sub-major subject...</option>
+                </select>
+                <div id="subMajor-selected" class="selected-subjects"></div>
+                <div class="credit-counter">Credits: <span id="subMajor-credits">0</span>/4</div>
+            </div>
+        </div>
+
+        <!-- Total Credits & Eligibility -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Credits: <span id="total-credits">0</span>/71</h3>
+                        <div id="eligibility-result"></div>
+                        <div id="requirements-met"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const restrictedGroups = {
+            english: ['Academic English　4年', 'Discussion English　4年'],
+            group1: ['現代の社会Ⅰ　4年', '現代の社会Ⅱ　4年', '歴史と文化Ⅰ　4年', '人間と世界Ⅰ　4年', '人間と世界Ⅱ　4年'],
+            group2: ['現代の社会Ⅲ　5年', '現代の社会Ⅳ　5年', '人間と世界Ⅲ　5年', '人間と世界Ⅳ　5年', '歴史と文化Ⅱ　5年'],
+            group3: ['経済概論　4年', '経営概論　4年'],
+            group4: ['ドイツ語　4年', 'フランス語　4年', 'スペイン語　4年', '中国語　4年', '韓国語　4年']
+        };
+
+        const subjects = {
+            general: [
+                { name: '国語表現　4年', credits: 2 },
+                { name: '体育実技Ⅱ　4年', credits: 2 },
+                { name: '知的財産論　4年', credits: 1 },
+                { name: 'Japanology　4年', credits: 1 },
+                { name: 'キャリアデザイン　4年', credits: 1 },
+                { name: '経済概論　4年', credits: 2 },
+                { name: '経営概論　4年', credits: 2 },
+                { name: '現代の社会Ⅰ　4年', credits: 2 },
+                { name: '現代の社会Ⅱ　4年', credits: 2 },
+                { name: '歴史と文化Ⅰ　4年', credits: 2 },
+                { name: '人間と世界Ⅰ　4年', credits: 2 },
+                { name: '人間と世界Ⅱ　4年', credits: 2 },
+                { name: '現代の社会Ⅲ　5年', credits: 2 },
+                { name: '現代の社会Ⅳ　5年', credits: 2 },
+                { name: '人間と世界Ⅲ　5年', credits: 2 },
+                { name: '人間と世界Ⅳ　5年', credits: 2 },
+                { name: '歴史と文化Ⅱ　5年', credits: 2 },
+                { name: 'Practical English　Ⅰ　4年', credits: 2 },
+                { name: 'Practical English　Ⅱ　5年', credits: 1 },
+                { name: 'Academic English　4年', credits: 2 },
+                { name: 'Discussion English　4年', credits: 2 },
+                { name: 'ドイツ語　4年', credits: 2 },
+                { name: 'フランス語　4年', credits: 2 },
+                { name: 'スペイン語　4年', credits: 2 },
+                { name: '中国語　4年', credits: 2 },
+                { name: '韓国語　4年', credits: 2 },
+                { name: '社会貢献　4年', credits: 1 },
+                { name: 'グローバル研修', credits: 1 },
+                { name: '他大学等での履修科目 (1)', credits: 1 },
+                { name: '他大学等での履修科目 (2)', credits: 2 },
+                { name: '知識・技能審査 (1)', credits: 1 },
+                { name: '知識・技能審査 (2)', credits: 2 }
+            ],
+            specialized: {
+                'Computer Science': [
+                    { name: '情報工学実験 III', credits: 4, required: true  },
+                    { name: '情報工学実験 IV', credits: 4, required: true  },
+                    { name: '課題研究', credits: 1, required: true  },
+                    { name: '卒業研究', credits: 9, required: true  },
+                    { name: '応用数学 I', credits: 2 },
+                    { name: '応用数学 II', credits: 2 },
+                    { name: '応用物理 II', credits: 2 },
+                    { name: '情報工学英語演習', credits: 1 },
+                    { name: '情報ネットワーク II', credits: 2 },
+                    { name: '離散数学 II', credits: 2 },
+                    { name: 'データ構造とアルゴリズム II', credits: 1 },
+                    { name: 'ソフトウェア工学', credits: 2 },
+                    { name: 'プログラミング応用', credits: 2 },
+                    { name: '論理設計', credits: 1 },
+                    { name: '言語処理', credits: 2 },
+                    { name: 'データベース', credits: 2 },
+                    { name: 'オペレーティングシステム', credits: 2 },
+                    { name: '統計分析法', credits: 2 },
+                    { name: 'ディジタル信号処理', credits: 2 },
+                    { name: '数値解析', credits: 2 },
+                    { name: '知識情報処理', credits: 2 },
+                    { name: 'コンピュータグラフィックス', credits: 2 },
+                    { name: '情報セキュリティ', credits: 2 },
+                    { name: '記号処理プログラミング', credits: 2 }
+                ],
+                'Electrical Engineering': [
+                    { name: '電気電子システム工学実験', credits: 6, required: true },
+                    { name: '課題研究', credits: 1, required: true },
+                    { name: '卒業研究', credits: 9, required: true},
+                    { name: '応用数学 I', credits: 2 },
+                    { name: '応用数学 II', credits: 2 },
+                    { name: '応用物理 II', credits: 2 },
+                    { name: '制御工学', credits: 2 },
+                    { name: '電気機器', credits: 2 },
+                        { name: '電気電子材料', credits: 3 },
+                        { name: 'エネルギー変換工学', credits: 2 },
+                        { name: '電力システム工学', credits: 2 },
+                        { name: '電磁気学 II', credits: 1 },
+                        { name: '伝送回路', credits: 2 },
+                        { name: '電子回路 II', credits: 2 },
+                        { name: '情報処理 II', credits: 1 },
+                        { name: 'コンピュータ工学', credits: 1 },
+                        { name: '電子計測システム', credits: 1 },
+                        { name: '制御システム工学', credits: 2 },
+                        { name: 'パワーエレクトロニクス', credits: 1 },
+                        { name: '高電圧工学', credits: 1 },
+                        { name: '電気応用工学', credits: 1 },
+                        { name: '自動設計製図', credits: 2 },
+                        { name: '電磁波工学', credits: 2 },
+                        { name: '無線通信工学', credits: 2 },
+                        { name: '電気法規', credits: 1 },
+                        { name: '電波法規', credits: 1 },
+                        { name: '電気電子工学英語演習', credits: 1 }
+
+                ],
+                'Business Administration': [
+                    { name: '物質工学実験 I', credits: 6, required: true },
+                    { name: '物質工学実験 II', credits: 2, required: true },
+                    { name: '物質工学実験 III', credits: 2, required: true },
+                    { name: '課題研究', credits: 1, required: true },
+                    { name: '卒業研究', credits: 9 },
+                    { name: '応用数学 I', credits: 2 },
+                    { name: '応用物理 II', credits: 2 },
+                    { name: '物質工学英語演習', credits: 1 },
+                    { name: '無機化学 II', credits: 1 },
+                    { name: '有機化学 II', credits: 2 },
+                    { name: '物理化学 II', credits: 2 },
+                    { name: '化学工学 I', credits: 2 },
+                    { name: '分析化学 II', credits: 1 },
+                    { name: '物理化学 III', credits: 2 },
+                    { name: '化学工学 II', credits: 2 },
+                    { name: '応用微生物工学', credits: 2 },
+                    { name: '応用数学 II', credits: 1 },
+                    { name: '応用化学演習 I', credits: 1 },
+                    { name: '応用化学演習 II', credits: 1 },
+                    { name: '物質工学実用数学', credits: 1 },
+                    { name: '有機合成化学', credits: 1 },
+                    { name: '環境化学', credits: 1 },
+                    { name: '放射化学', credits: 1 },
+                    { name: '安全工学', credits: 1 },
+                    { name: '反応理論化学', credits: 2 },
+                    { name: '無機材料工学', credits: 2 },
+                    { name: '高分子材料工学', credits: 2 },
+                    { name: '生物工学', credits: 2 },
+                    { name: '環境保全工学', credits: 2 },
+                    { name: '生物資源工学', credits: 2 }
+
+                ],
+                'Mechanical Engineering': [
+                    { name: '機械・制御工学実験', credits: 7, required: true },
+                    { name: '課題研究', credits: 1, required: true },
+                    { name: '卒業研究', credits: 9, required: true },
+                    { name: '応用数学 I', credits: 2 },
+                    { name: '電磁気学 II', credits: 1 },
+                    { name: '材料工学 I', credits: 2 },
+                    { name: '機械・制御数学', credits: 1 },
+                    { name: '応用数学 II', credits: 1 },
+                    { name: '応用物理 II', credits: 2 },
+                    { name: '材料工学 II', credits: 1 },
+                    { name: '機械設計法', credits: 2 },
+                    { name: '機械力学 I', credits: 2 },
+                    { name: '材料力学 I', credits: 1 },
+                    { name: '制御工学 I', credits: 2 },
+                    { name: '計測工学 I', credits: 1 },
+                    { name: '熱工学 I', credits: 2 },
+                    { name: '流体工学 I', credits: 2 },
+                    { name: 'CAD CAM CAE I', credits: 1 },
+                    { name: '制御電子回路', credits: 2 },
+                    { name: '電子計算機', credits: 1 },
+                    { name: '流体力学', credits: 2 },
+                    { name: '基礎制御工学 I', credits: 2 },
+                    { name: 'アルゴリズムとデータ構造', credits: 1 },
+                    { name: '制御システム', credits: 1 },
+                    { name: '機械力学', credits: 1 },
+                    { name: '熱力学 I', credits: 1 },
+                    { name: 'CAD CAM CAE II', credits: 2 },
+                    { name: '応用数学 III', credits: 1 },
+                    { name: '機械・制御工学英語', credits: 1 },
+                    { name: '数値解析', credits: 1 },
+                    { name: '制御工学 II', credits: 1 },
+                    { name: 'CAD CAM CAE II', credits: 1 },
+                    { name: '機械電気工学 I', credits: 1 },
+                    { name: '熱工学 II', credits: 1 },
+                    { name: '機械設計製図', credits: 2 },
+                    { name: '応用機械工学', credits: 1 },
+                    { name: '機械力学 II', credits: 2 },
+                    { name: '計測工学 II', credits: 1 },
+                    { name: '制御工学 III', credits: 1 },
+                    { name: '生産工学', credits: 1 },
+                    { name: '流体工学 II', credits: 1 },
+                    { name: 'システム工学', credits: 1 },
+                    { name: 'マイクロコンピュータシステム', credits: 1 },
+                    { name: '基礎制御工学 II', credits: 2 },
+                    { name: 'ロボット工学', credits: 2 },
+                    { name: '機構学', credits: 1 },
+                    { name: '電子デバイス', credits: 1 },
+                    { name: '計測工学', credits: 2 },
+                    { name: '機械設計', credits: 2 },
+                    { name: 'プログラム設計', credits: 1 }
+                ]
+            },
+            subMajor: {
+                'グローベル系': [
+                    { name: 'Global PBL', credits: 1, required: true },
+                    { name: 'Project Management', credits: 2 },
+                    { name: 'Applied Science', credits: 2 },
+                    { name: 'Physical Mathematics', credits: 2 },
+                    { name: 'Quantum Chemistry', credits: 2 }
+                ],
+                '情報系': [
+                    { name: 'プログラミング応用', credits: 2 },
+                    { name: '統計分析法', credits: 2 },
+                    { name: 'ディジタル信号処理', credits: 2 },
+                    { name: 'コンピュータグラフィックス', credits: 2 }
+                ],
+                '電気電子系': [
+                    { name: '電子工学概論', credits: 2 },
+                    { name: '通信システム工学概論', credits: 2 },
+                    { name: 'コンピュータハードウェア', credits: 2 },
+                    { name: '電気機器概論', credits: 2 }
+                ],
+                '機械制御系': [
+                    { name: '機械工学概論', credits: 2 },
+                    { name: '制御工学概論', credits: 2 },
+                    { name: '力学', credits: 2 },
+                    { name: 'エネルギー工学', credits: 2 }
+                ],
+                '化学生物環境系': [
+                    { name: '生物科学概論', credits: 2 },
+                    { name: '環境科学概論', credits: 2 },
+                    { name: '材料化学概論', credits: 2 },
+                    { name: '化学工学概論', credits: 2 }
+                ]
+            }
+        };
+
+        const state = {
+            general: { available: [...subjects.general], selected: [] },
+            specialized: { available: [], selected: [] },
+            subMajor: { available: [], selected: [] }
+        };
+
+        function renderDropdown(category) {
+            const $dropdown = $(`#${category}-subject`);
+            $dropdown.empty().append('<option value="" disabled selected>Select a subject...</option>');
+            if (!state[category] || !state[category].available) return;
+            state[category].available.sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(subject => {
+                    $dropdown.append(`<option value="${subject.name}">${subject.name} (${subject.credits} credits)</option>`);
+                });
+        }
+
+        function renderSelected(category) {
+            const $container = $(`#${category}-selected`);
+            $container.empty();
+            state[category].selected.forEach(subject => {
+                const $item = $('<div class="selected-item"></div>')
+                    .text(`${subject.name} (${subject.credits} credits)`);
+                // Only add remove button for non-required subjects
+                if (!subject.required) {
+                    const $removeBtn = $('<button class="btn btn-sm btn-danger">×</button>')
+                        .on('click', () => removeSubject(category, subject));
+                    $item.append($removeBtn);
+                }
+                $container.append($item);
+            });
+        }
+
+        function removeSubject(category, subject) {
+            if (subject.required) return; // Prevent removal of required subjects
+            const index = state[category].selected.findIndex(s => s.name === subject.name);
+            if (index > -1) {
+                state[category].selected.splice(index, 1);
+                state[category].available.push(subject);
+
+                if (category === 'general') {
+                    Object.entries(restrictedGroups).forEach(([groupName, groupSubjects]) => {
+                        if (groupSubjects.includes(subject.name)) {
+                            const hasOtherFromGroup = state.general.selected.some(s => groupSubjects.includes(s.name));
+                            if (!hasOtherFromGroup) {
+                                groupSubjects.forEach(name => {
+                                    if (name !== subject.name) {
+                                        const subj = subjects.general.find(s => s.name === name);
+                                        if (subj && !state.general.available.some(s => s.name === name)) {
+                                            state.general.available.push(subj);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+
+                renderDropdown(category);
+                renderSelected(category);
+                updateCredits();
+                checkEligibility();
+            }
+        }
+
+        function updateCredits() {
+            const general = state.general.selected.reduce((sum, s) => sum + s.credits, 0);
+            const specialized = state.specialized.selected.reduce((sum, s) => sum + s.credits, 0);
+            const subMajor = state.subMajor.selected.reduce((sum, s) => sum + s.credits, 0);
+            const total = general + specialized + subMajor;
+
+            $('#general-credits').text(general);
+            $('#specialized-credits').text(specialized);
+            $('#subMajor-credits').text(subMajor);
+            $('#total-credits').text(total);
+        }
+
+        function checkEligibility() {
+            const general = state.general.selected.reduce((sum, s) => sum + s.credits, 0);
+            const specialized = state.specialized.selected.reduce((sum, s) => sum + s.credits, 0);
+            const subMajor = state.subMajor.selected.reduce((sum, s) => sum + s.credits, 0);
+            const total = general + specialized + subMajor;
+
+            const requirements = {
+                general: { required: 11, actual: general },
+                specialized: { required: 50, actual: specialized + subMajor },
+                subMajor: { required: 4, actual: subMajor },
+                total: { required: 71, actual: total }
+            };
+
+            const issues = [];
+            const met = [];
+            Object.entries(requirements).forEach(([key, value]) => {
+                if (value.actual < value.required) {
+                    const label = key === 'subMajor' ? 'Sub-major' : key.charAt(0).toUpperCase() + key.slice(1);
+                    issues.push(`${label} credits: ${value.actual}/${value.required}`);
+                } else {
+                    const label = key === 'subMajor' ? 'Sub-major' : key.charAt(0).toUpperCase() + key.slice(1);
+                    met.push(`${label} credits: ${value.actual}/${value.required}`);
+                }
+            });
+
+            const $result = $('#eligibility-result');
+            $result.empty();
+            
+            if (issues.length === 0) {
+                $result.html('<div class="alert alert-success">Congratulations! You meet all graduation requirements.</div>');
+            } else {
+                const issuesList = issues.map(issue => `<li>${issue}</li>`).join('');
+                $result.html(`<div class="alert alert-danger"><strong>Requirements not met:</strong><ul>${issuesList}</ul></div>`);
+            }
+
+            const $met = $('#requirements-met');
+            $met.empty();
+            if (met.length > 0) {
+                const metList = met.map(item => `<li>${item}</li>`).join('');
+                $met.html(`<div class="alert alert-success"><strong>Requirements met:</strong><ul>${metList}</ul></div>`);
+            }
+        }
+
+        $(document).ready(() => {
+            renderDropdown('general');
+
+            $('#general-subject').change(function() {
+                const subjectName = $(this).val();
+                if (!subjectName) return;
+
+                const subject = state.general.available.find(s => s.name === subjectName);
+                if (subject) {
+                    let isRestricted = false;
+                    Object.entries(restrictedGroups).forEach(([groupName, groupSubjects]) => {
+                        if (groupSubjects.includes(subject.name)) {
+                            const hasGroupSelected = state.general.selected.some(s => groupSubjects.includes(s.name));
+                            if (hasGroupSelected) {
+                                isRestricted = true;
+                                alert(`You can only select one subject from this group: ${groupSubjects.join(', ')}`);
+                                return;
+                            }
+                            groupSubjects.forEach(name => {
+                                if (name !== subject.name) {
+                                    const index = state.general.available.findIndex(s => s.name === name);
+                                    if (index > -1) state.general.available.splice(index, 1);
+                                }
+                            });
+                        }
+                    });
+
+                    if (!isRestricted) {
+                        state.general.available = state.general.available.filter(s => s.name !== subjectName);
+                        state.general.selected.push(subject);
+                        $(this).val('');
+                        renderDropdown('general');
+                        renderSelected('general');
+                        updateCredits();
+                        checkEligibility();
+                    }
+                }
+            });
+
+            $('#major').change(function() {
+                const major = $(this).val();
+                if (!major) {
+                    $('#submajor').prop('disabled', true).val('');
+                    $('#specialized-subject').prop('disabled', true).val('');
+                    $('#subMajor-subject').prop('disabled', true).val('');
+                    state.specialized.selected = [];
+                    state.subMajor.selected = [];
+                    renderSelected('specialized');
+                    renderSelected('subMajor');
+                    updateCredits();
+                    checkEligibility();
+                    return;
+                }
+
+                $('#submajor').prop('disabled', false).empty().append('<option value="">Select a sub-major...</option>');
+                Object.keys(subjects.subMajor).forEach(subMajor => {
+                    $('#submajor').append(`<option value="${subMajor}">${subMajor}</option>`);
+                });
+
+                // Load specialized subjects and auto-select required ones
+                const allSubjects = [...subjects.specialized[major]];
+                state.specialized.selected = allSubjects.filter(s => s.required);
+                state.specialized.available = allSubjects.filter(s => !s.required);
+                renderDropdown('specialized');
+                renderSelected('specialized');
+                $('#specialized-subject').prop('disabled', false);
+
+                state.subMajor.available = [];
+                state.subMajor.selected = [];
+                $('#subMajor-subject').prop('disabled', true).val('');
+                renderSelected('subMajor');
+                updateCredits();
+                checkEligibility();
+            });
+
+            $('#submajor').change(function() {
+                const subMajor = $(this).val();
+                if (!subMajor) {
+                    $('#subMajor-subject').prop('disabled', true).val('');
+                    state.subMajor.selected = [];
+                    renderSelected('subMajor');
+                    updateCredits();
+                    checkEligibility();
+                    return;
+                }
+
+                // Load sub-major subjects and auto-select required ones
+                const allSubjects = [...subjects.subMajor[subMajor]];
+                state.subMajor.selected = allSubjects.filter(s => s.required);
+                state.subMajor.available = allSubjects.filter(s => !s.required);
+                renderDropdown('subMajor');
+                renderSelected('subMajor');
+                $('#subMajor-subject').prop('disabled', false);
+                updateCredits();
+                checkEligibility();
+            });
+
+            $('#specialized-subject').change(function() {
+                const subjectName = $(this).val();
+                if (!subjectName) return;
+
+                const subject = state.specialized.available.find(s => s.name === subjectName);
+                if (subject) {
+                    state.specialized.available = state.specialized.available.filter(s => s.name !== subjectName);
+                    state.specialized.selected.push(subject);
+                    $(this).val('');
+                    renderDropdown('specialized');
+                    renderSelected('specialized');
+                    updateCredits();
+                    checkEligibility();
+                }
+            });
+
+            $('#subMajor-subject').change(function() {
+                const subjectName = $(this).val();
+                if (!subjectName) return;
+
+                const subject = state.subMajor.available.find(s => s.name === subjectName);
+                if (subject) {
+                    state.subMajor.available = state.subMajor.available.filter(s => s.name !== subjectName);
+                    state.subMajor.selected.push(subject);
+                    $(this).val('');
+                    renderDropdown('subMajor');
+                    renderSelected('subMajor');
+                    updateCredits();
+                    checkEligibility();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
